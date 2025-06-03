@@ -257,6 +257,7 @@ function gameOver()
             speed = 2;
             score=0;
             time=60;
+            armor=5;
         }
     if(armor<0)
     {
