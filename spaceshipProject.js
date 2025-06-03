@@ -10,7 +10,7 @@
 //if your score greater than 6, you have A grade
 //if your score greater than 3, you have B grade
 //if your score greater than 0, you have C grade
-//Otherwise, you get F
+//Otherwise, you get D
 var x = 250;
 var y = 400;
 var a = 300;
