@@ -218,6 +218,25 @@ function gameCheck()
         {
             time--;
         }
+    if(score>=10)
+        {
+            grade="S";
+        }
+    else if(score>6)
+        {
+            grade="A";
+        }
+    else if(score>3)
+        {
+            grade="B";
+        }
+    else if(score>0)
+        {
+            grade="C";
+        }
+    else{
+            grade="D";
+        }
 }
 //you can change the speed of meteorolite
 function changeSpeed(newSpeed)
@@ -234,25 +253,6 @@ function gameOver()
             a = 300;
             b = 300;
             speed = 2;
-            if(score>=10)
-            {
-                grade="S";
-            }
-            else if(score>6)
-            {
-                grade="A";
-            }
-            else if(score>3)
-            {
-                grade="B";
-            }
-            else if(score>0)
-            {
-                grade="C";
-            }
-            else{
-                grade="F";
-            }
             score=0;
             time=60;
         }
