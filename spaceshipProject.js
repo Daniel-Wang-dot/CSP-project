@@ -11,6 +11,8 @@
 //if your score greater than 3, you have B grade
 //if your score greater than 0, you have C grade
 //Otherwise, you get D
+//You have 5 armors to prtect you from the stones
+//If your armor is lower than 0, your spaceship is crashed
 var x = 250;
 var y = 400;
 var a = 300;
@@ -20,6 +22,7 @@ var score = 0;
 var state = "Fine";
 var grade = "Ungraded";
 var time = 60;
+var armor = 5;
 let backgroundImage={
     y1:0,
     y2:-800,
@@ -200,18 +203,17 @@ function record()
     text(grade,80,90);
     text("Time: ",30,120);
     text(time,80,120);
+    text("Armor: ",30,150);
+    text(armor,80,150);
 }
 //which condition let score change
 function gameCheck()
 {
     for(let i=0;i<totalstones;i++)    {
-        if(stones[i].x>=x+20&&stones[i].x<=x+80&&stones[i].y>=y+20&&stones[i].y<=y+80)
+        if(stones[i].x>=x+20&&stones[i].x<=x+80&&stones[i].y>=y+20&&stones[i].y<=y+80&&frameCount % 30 == 0)
         {
-            if(frameCount % 30 == 0)
-            {
-                score--;
-            }
-            state="Crash";
+            score--;
+            armor--;
         }
     }
     if(frameCount % 60 == 0)
@@ -256,4 +258,16 @@ function gameOver()
             score=0;
             time=60;
         }
+    if(armor<0)
+    {
+            x = 250;
+            y = 400;
+            a = 300;
+            b = 300;
+            speed = 2;
+            score=0;
+            time=60;
+            state="Crash";
+            armor=5;
+    }
 }
