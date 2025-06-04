@@ -16,9 +16,10 @@ var a = 300;
 var b = 300;
 var speed = 2;
 var score = 0;
-var state = "in good condition";
+var life = 5;
 var grade = "Ungraded";
 var time = 60;
+var gamePaused = false;
 let backgroundImage={
     y1:0,
     y2:-800,
@@ -51,22 +52,33 @@ function setup()
     
 }
 //recall the methods.
-function draw()
-{
+function draw() {
     background(220);
     drawBackground();
     moveBackground();
     startOver();
-    drawstones();
-    fallingstones();
     drawship();
-    moveship();
-    enemy();
     record();
-    gameCheck();
-    changeSpeed(3);
-    attack();
-    gameOver();
+
+    if (!gamePaused){
+        drawstones();
+        fallingstones();
+        moveship();
+        enemy();
+        attack();
+        gameCheck();
+        changeSpeed(3);
+        gameOver();
+    } else { 
+        textSize(40);
+        fill("white");
+        stroke("black");
+        strokeWeight(3);
+        textAlign(CENTER, CENTER);
+        text("Final Grade:"+grade,width/2,height/2);
+        textSize(20);
+        text("Press R to Restart", width/2, height/2+50);
+    }
 }
 //the imformations of the meteorolite.
 function createstones(x,y)
@@ -95,6 +107,7 @@ function fallingstones()
         if(stones[i].y>height)
             {
                 stones[i].y=0;
+                stones[i].x=random(width);
             }
         else{
             stones[i].y+=stones[i].speed;
@@ -195,8 +208,8 @@ function record()
     textSize(16);
     text("Score: ",30,30);
     text(score,80,30);
-    text("State: ",30,60);
-    text(state,80,60);
+    text("Life:",30,60); 
+    text(life,80,60);
     text("Grade: ",30,90);
     text(grade,80,90);
     text("Time: ",30,120);
@@ -210,9 +223,9 @@ function gameCheck()
         {
             if(frameCount % 30 == 0)
             {
-                score--;
+                score=score-5;
+                life--;
             }
-            state="Crash";
         }
     }
     if(frameCount % 60 == 0)
@@ -226,35 +239,43 @@ function changeSpeed(newSpeed)
     speed=newSpeed;
 }
 //the condition to reset the game
-function gameOver()
-{
-    if(time<0)
-        {
-            x = 250;
-            y = 400;
-            a = 300;
-            b = 300;
-            speed = 2;
-            if(score>=10)
-            {
-                grade="S";
-            }
-            else if(score>6)
-            {
-                grade="A";
-            }
-            else if(score>3)
-            {
-                grade="B";
-            }
-            else if(score>0)
-            {
-                grade="C";
-            }
-            else{
-                grade="F";
-            }
-            score=0;
-            time=60;
+function gameOver() {
+    if (time<0||life<=0){
+        if (score >= 10) {
+            grade="S";
+        } else if (score > 6) {
+            grade="A";
+        } else if (score > 3) {
+            grade="B";
+        } else if (score > 0) {
+            grade="C";
+        } else {
+            grade="F";
         }
+        gamePaused=true;
+    }
+}
+
+function keyPressed() {
+    if (gamePaused&&key==='r') {
+        resetGame();
+    }
+}
+
+function resetGame() {
+    x=250;
+    y=400;
+    a=300;
+    b=300;
+    speed=2;
+    score=0;
+    time=60;
+    life=5;
+    grade="Ungraded";
+    gamePaused=false;
+    stones=[];
+    for (let i=0; i<totalstones;i++) {
+        let stoneUse=createstones(random(width),random(height));
+        stones.push(stoneUse);
+    }
 }
