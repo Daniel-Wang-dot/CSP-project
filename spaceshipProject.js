@@ -251,7 +251,7 @@ function gameOver() {
         } else if (score > 0) {
             grade="C";
         } else {
-            grade="F";
+            grade="D";
         }
         gamePaused=true;
     }
