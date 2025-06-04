@@ -185,19 +185,20 @@ function enemy()
     circle(a,b,30);
 }
 //Fire the laser to your enemies
-function attack()
-{
-    if(mouseIsPressed)
-    {
-        state="Fine";
-        stroke('rgb(0, 255, 0)');
-        strokeWeight(4);
-        line(x+50,0,x+50,y);
-        if(x+50>=a-15&&x+50<=a+15&&y>b)
-        {
-            a=random(100,500);
-            b=random(100,500);
-            score++;
+function attack() {
+    if (mouseIsPressed) {
+        let currentTime=millis();
+        if (currentTime-lastShotTime>=shotCooldown) {
+            lastShotTime=currentTime;
+
+            stroke('rgb(0, 255, 0)');
+            strokeWeight(4);
+            line(x+50,0,x+50,y);
+            if (x+50>=a-15&&x+50<=a+15&&y>b) {
+                a=random(100,500);
+                b=random(100,500);
+                score++;
+            }
         }
     }
 }
