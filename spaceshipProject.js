@@ -1,28 +1,24 @@
 //This is a game of Spaceship Pilot rating procedure 
-//You can control the spaceship to avoid the stones to hit you, 
+//You can use'WASD'to control the spaceship to avoid the stones to hit you, 
 // if not, one point you lost. 
-//You can control the spaceship to annihilate the enemies, which I represent by red points, 
+//You can use left button to annihilate the enemies, which We represent by red points, 
 // if you hit it, one point you get.
+//you got 1 minute, if the time is end, game reset.
 //Base one your performance, you can get your grade.
-//if time is end, game reset.
-//Using w,a,s,d to control the spaceship, 
 //if your score equal or greater than 10, you have S grade
 //if your score greater than 6, you have A grade
 //if your score greater than 3, you have B grade
 //if your score greater than 0, you have C grade
-//Otherwise, you get D
-//You have 5 armors to prtect you from the stones
-//If your armor is lower than 0, your spaceship is crashed
+//Otherwise, you get F
 var x = 250;
 var y = 400;
 var a = 300;
 var b = 300;
 var speed = 2;
 var score = 0;
-var state = "Fine";
+var state = "in good condition";
 var grade = "Ungraded";
 var time = 60;
-var armor = 5;
 let backgroundImage={
     y1:0,
     y2:-800,
@@ -33,15 +29,15 @@ let totalstones = 10;
 //This is for upload three images.
 function preload()
 {
-    //stoneImage = loadImage("/images/stone.jpg");
-    stoneImage = loadImage("/images/stone.jpg", () => {
+    //stoneImage = loadImage("stone.jpg");
+    stoneImage = loadImage("stone.jpg", () => {
         removeBackground(stoneImage);
     });
-    spaceImage = loadImage("/images/spaceship-png-icon-19.png", () => {
+    spaceImage = loadImage("spaceship-png-icon-19.png", () => {
         removeBackground(spaceImage);
     });
-    backgroundImage.bg1 = loadImage("/images/universe.webp");
-    backgroundImage.bg2 = loadImage("/images/universe.webp");
+    backgroundImage.bg1 = loadImage("universe.webp");
+    backgroundImage.bg2 = loadImage("universe.webp");
 }
 //push the meteorolite to the list.
 function setup()
@@ -170,6 +166,8 @@ function moveship()
 //show the enemies on screen
 function enemy()
 {
+    stroke('yellow')
+    strokeWeight(3)
     fill("red");
     circle(a,b,30);
 }
@@ -203,41 +201,23 @@ function record()
     text(grade,80,90);
     text("Time: ",30,120);
     text(time,80,120);
-    text("Armor: ",30,150);
-    text(armor,80,150);
 }
 //which condition let score change
 function gameCheck()
 {
     for(let i=0;i<totalstones;i++)    {
-        if(stones[i].x>=x+20&&stones[i].x<=x+80&&stones[i].y>=y+20&&stones[i].y<=y+80&&frameCount % 30 == 0)
+        if(stones[i].x>=x+20&&stones[i].x<=x+80&&stones[i].y>=y+20&&stones[i].y<=y+80)
         {
-            score--;
-            armor--;
+            if(frameCount % 30 == 0)
+            {
+                score--;
+            }
+            state="Crash";
         }
     }
     if(frameCount % 60 == 0)
         {
             time--;
-        }
-    if(score>=10)
-        {
-            grade="S";
-        }
-    else if(score>6)
-        {
-            grade="A";
-        }
-    else if(score>3)
-        {
-            grade="B";
-        }
-    else if(score>0)
-        {
-            grade="C";
-        }
-    else{
-            grade="D";
         }
 }
 //you can change the speed of meteorolite
@@ -255,20 +235,26 @@ function gameOver()
             a = 300;
             b = 300;
             speed = 2;
+            if(score>=10)
+            {
+                grade="S";
+            }
+            else if(score>6)
+            {
+                grade="A";
+            }
+            else if(score>3)
+            {
+                grade="B";
+            }
+            else if(score>0)
+            {
+                grade="C";
+            }
+            else{
+                grade="F";
+            }
             score=0;
             time=60;
-            armor=5;
         }
-    if(armor<0)
-    {
-            x = 250;
-            y = 400;
-            a = 300;
-            b = 300;
-            speed = 2;
-            score=0;
-            time=60;
-            state="Crash";
-            armor=5;
-    }
 }
