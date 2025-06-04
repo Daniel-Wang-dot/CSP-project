@@ -1,8 +1,8 @@
 //This is a game of Spaceship Pilot rating procedure 
 //You can use'WASD'to control the spaceship to avoid the stones to hit you, 
-// if not, one point you lost. 
+// if not, 5 point you lost. 
 //You can use left button to annihilate the enemies, which We represent by red points, 
-// if you hit it, one point you get.
+// if you hit it, 1 point you get.
 //you got 1 minute, if the time is end, game reset.
 //Base one your performance, you can get your grade.
 //if your score equal or greater than 10, you have S grade
@@ -10,6 +10,8 @@
 //if your score greater than 3, you have B grade
 //if your score greater than 0, you have C grade
 //Otherwise, you get D
+//There are 6 levels, you can go to next level only if you got S at previous level.
+//if you got S at level 5, you win this game.
 var x = 250;
 var y = 400;
 var a = 300;
