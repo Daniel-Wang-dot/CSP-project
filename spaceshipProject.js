@@ -9,7 +9,7 @@
 //if your score greater than 6, you have A grade
 //if your score greater than 3, you have B grade
 //if your score greater than 0, you have C grade
-//Otherwise, you get F
+//Otherwise, you get D
 var x = 250;
 var y = 400;
 var a = 300;
@@ -18,6 +18,10 @@ var speed = 2;
 var score = 0;
 var life = 5;
 var grade = "Ungraded";
+var lastShotTime=0;
+var level=0;
+var shotCooldown=level*1000;
+var gameWin = false;
 var time = 60;
 var gamePaused = false;
 let backgroundImage={
@@ -79,6 +83,17 @@ function draw() {
         textSize(20);
         text("Press R to Restart", width/2, height/2+50);
     }
+
+    if (gameWin) {
+        textSize(50);
+        fill(255, 0, 0);
+        textAlign(CENTER, CENTER);
+        text("Congratulations, you win this game!", width / 2, height / 2);
+        textSize(20);
+        text("Press R to restart", width / 2, height / 2 + 50);
+        noLoop();
+    }
+}
 }
 //the imformations of the meteorolite.
 function createstones(x,y)
@@ -215,6 +230,8 @@ function record()
     text(grade,80,90);
     text("Time: ",30,120);
     text(time,80,120);
+    text("Level: ", 30, 150);
+    text(level, 80, 150);
 }
 //which condition let score change
 function gameCheck()
@@ -253,13 +270,28 @@ function gameOver() {
         } else {
             grade="D";
         }
+
+        if(grade==="S"){
+            if (level<5) {
+                level++;
+            }else{
+                gameWin=true;
+            }
+        } else {
+            level=0;
+        }
+
+        shotCooldown=level*1000;
         gamePaused=true;
     }
 }
 
 function keyPressed() {
-    if (gamePaused&&key==='r') {
-        resetGame();
+    if (gameWin&&key==='r'||key==='R') {
+        level=0;
+        shotCooldown=0;
+        gameWin=false;
+        loop();
     }
 }
 
