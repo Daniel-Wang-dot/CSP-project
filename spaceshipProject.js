@@ -96,7 +96,6 @@ function draw() {
         noLoop();
     }
 }
-}
 //the imformations of the meteorolite.
 function createstones(x,y)
 {
