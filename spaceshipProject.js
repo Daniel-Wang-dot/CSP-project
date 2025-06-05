@@ -93,7 +93,6 @@ function draw() {
         text("Congratulations, you win this game!", width / 2, height / 2);
         textSize(20);
         text("Press R to restart", width / 2, height / 2 + 50);
-        noLoop();
     }
 }
 //the imformations of the meteorolite.
@@ -288,11 +287,8 @@ function gameOver() {
 }
 
 function keyPressed() {
-    if (gameWin&&key==='r'||key==='R') {
-        level=0;
-        shotCooldown=0;
-        gameWin=false;
-        loop();
+    if (keyCode==82) {
+        resetGame()
     }
 }
 
@@ -307,6 +303,7 @@ function resetGame() {
     life=5;
     grade="Ungraded";
     gamePaused=false;
+    gameWin = false;
     stones=[];
     for (let i=0; i<totalstones;i++) {
         let stoneUse=createstones(random(width),random(height));
